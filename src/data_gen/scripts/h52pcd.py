@@ -65,18 +65,28 @@ for filename in os.listdir(root_dir):
     timestamp = f['timestamp']
     
     cap = cv2.VideoCapture(image_file_name)
-    frames = []
-    while(1):
-        # get a frame
-        ret, frame = cap.read()
-        if ret:
-            frames.append(frame)
-        else:
-            break
-    print ("image frames: ",len(frames))
+    # frames = []
+    # while(1):
+    #     # get a frame
+    #     ret, frame = cap.read()
+    #     if ret:
+    #         frames.append(frame)
+    #     else:
+    #         break
+    # print ("image frames: ",len(frames))
 
-    for i, num in enumerate(range(0,min(len(frames),len(lidar_data)),100)):
+
+    num_old = -1
+    for i, num in enumerate(range(0,len(lidar_data),100)):
         print ("record frame: ", num)
+
+        for _ in range(num_old,num):
+            ret, frame = cap.read()
+            if not ret:
+                print ("lack vidio frame")
+                break
+        num_old = num
+
         points = []
         one_lidar = lidar_data[num,:]
         assert len(one_lidar)//75==408
@@ -91,5 +101,5 @@ for filename in os.listdir(root_dir):
 
         write_pcb(points, path_dir, WIDTH, i)
         name = path_dir + "/training/image_2/"+str(i).zfill(6)+".png"
-        cv2.imwrite(name, frames[num])
+        cv2.imwrite(name, frame)
 
