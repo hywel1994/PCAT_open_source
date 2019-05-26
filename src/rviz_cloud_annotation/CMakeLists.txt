@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_conversions
   roscpp
   tf
+  image_transport
   visualization_msgs
   geometry_msgs
   eigen_conversions
@@ -126,3 +127,13 @@ target_link_libraries(rviz_cloud_annotation_com
   Qt5::Widgets
 )
 
+set(imagetest_SRC
+        src/image_test.cpp
+        )
+
+add_executable(imagetest ${imagetest_SRC})
+target_link_libraries(imagetest ${catkin_LIBRARIES} 
+                                ${PCL_LIBRARIES} 
+                                ${OpenCV_LIBRARIES})
+
+#autolipot_gencfg

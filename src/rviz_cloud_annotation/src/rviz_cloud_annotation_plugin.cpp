@@ -957,7 +957,7 @@ void QRVizCloudAnnotation::onSetControlPointMaxWeight(const std_msgs::Int32 &msg
 
   ROS_INFO("rviz_cloud_annotation_plugin: set max weight to %i", (unsigned int)(m_control_point_weight_max));
 
-  showImageLabel("/home/halo/lidar_annotation/image/label.png");
+  showImageLabel("/home/hywel/lidar_annotation/image/000000.png");
 }
 
 void QRVizCloudAnnotation::onSetBiasZero(const std_msgs::Empty &msg)
@@ -1585,8 +1585,9 @@ void QRVizCloudAnnotation::showImageLabel(std::string imagePath)
   }
   else
   {
-    std::cout << "open image ok" << std::endl;
+    std::cout << "open image ok" <<  std::endl;
   }
+
   sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
 
   m_image_label_pub.publish(msg);
