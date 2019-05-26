@@ -3,3 +3,8 @@ devel/
 build/
 .catkin_tools/
 .vscode/
+
+*~
+*.out
+*.pyc
+*.[oa]
