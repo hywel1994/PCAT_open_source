@@ -430,19 +430,19 @@ QRVizCloudAnnotation::QRVizCloudAnnotation(QWidget *parent) : rviz::Panel(parent
     annotation_type_layout->addWidget(m_bbox_button);
     m_annotation_type_group->addButton(m_bbox_button, ANNOTATION_TYPE_BBOX);
 
-    m_plane_button = new QPushButton(" 地面 F2", this);
+    m_plane_button = new QPushButton(" 水面 F2", this);
     m_plane_button->setCheckable(true);
     m_plane_button->setShortcut(QKeySequence("F2"));
     annotation_type_layout->addWidget(m_plane_button);
     m_annotation_type_group->addButton(m_plane_button, ANNOTATION_TYPE_PLANE);
 
-    m_kerb_button = new QPushButton(" 路沿 F3", this);
+    m_kerb_button = new QPushButton(" 岸沿 F3", this);
     m_kerb_button->setCheckable(true);
     m_kerb_button->setShortcut(QKeySequence("F3"));
     annotation_type_layout->addWidget(m_kerb_button);
     m_annotation_type_group->addButton(m_kerb_button, ANNOTATION_TYPE_KERB);
 
-    m_lane_button = new QPushButton(" 车道线 F4", this);
+    m_lane_button = new QPushButton(" 航道 F4", this);
     m_lane_button->setCheckable(true);
     m_lane_button->setShortcut(QKeySequence("F4"));
     annotation_type_layout->addWidget(m_lane_button);
@@ -537,7 +537,7 @@ QRVizCloudAnnotation::QRVizCloudAnnotation(QWidget *parent) : rviz::Panel(parent
     main_layout->addLayout(bbox_type);
     m_toolbar_group = new QButtonGroup(this);
 
-    QLabel *title1_label = new QLabel("障碍物类别：[1-5]-小车   [6-10]-大车   [11-15]-行人   [16-20]-骑行", this);
+    QLabel *title1_label = new QLabel("障碍物类别：[1-5]-三体船   [6-10]-雕塑   [11-15]-帆船   [16-20]-未知", this);
     QPalette palette;
     palette.setColor(QPalette::Text, Qt::red);
     title1_label->setPalette(palette);
@@ -980,13 +980,13 @@ void QRVizCloudAnnotation::onSetObjectId(const std_msgs::Int32 &msg)
   else if (ANNOTATION_TYPE == KERB)
   {
     kerb_id = msg.data;
-    std::string m_str_ = "第" + std::to_string(kerb_id + 1) + "条路沿";
+    std::string m_str_ = "第" + std::to_string(kerb_id + 1) + "条岸边";
     m_object_id->setText(m_str_.c_str());
   }
   else if (ANNOTATION_TYPE == LANE)
   {
     lane_id = msg.data;
-    std::string m_str_ = "第" + std::to_string(lane_id + 1) + "条车道线";
+    std::string m_str_ = "第" + std::to_string(lane_id + 1) + "条航道";
     m_object_id->setText(m_str_.c_str());
   }
   else if (ANNOTATION_TYPE == PLANE)
@@ -1005,12 +1005,12 @@ void QRVizCloudAnnotation::onChangeObjectId()
   }
   else if (ANNOTATION_TYPE == KERB)
   {
-    std::string m_str_ = "第" + std::to_string(kerb_id + 1) + "条路沿";
+    std::string m_str_ = "第" + std::to_string(kerb_id + 1) + "条岸边";
     m_object_id->setText(m_str_.c_str());
   }
   else if (ANNOTATION_TYPE == LANE)
   {
-    std::string m_str_ = "第" + std::to_string(lane_id + 1) + "条车道线";
+    std::string m_str_ = "第" + std::to_string(lane_id + 1) + "条航道";
     m_object_id->setText(m_str_.c_str());
   }
   else if (ANNOTATION_TYPE == PLANE)
@@ -1087,33 +1087,33 @@ void QRVizCloudAnnotation::FillPointCounts(uint type)
       switch (m_label_)
       {
       case 0:
-        m_str_ = "小车";
+        m_str_ = "三体船";
         break;
       case 1:
-        m_str_ = "大车";
+        m_str_ = "雕塑";
         break;
       case 2:
-        m_str_ = "行人";
+        m_str_ = "帆船";
         break;
       case 3:
-        m_str_ = "骑行";
+        m_str_ = "未知";
         break;
       }
       m_page_buttons[i]->setText(m_str_.c_str());
     }
     else if (type == LANE)
     {
-      std::string m_str_ = "车道";
+      std::string m_str_ = "航道";
       m_page_buttons[i]->setText(m_str_.c_str());
     }
     else if (type == KERB)
     {
-      std::string m_str_ = "路沿";
+      std::string m_str_ = "岸边";
       m_page_buttons[i]->setText(m_str_.c_str());
     }
     else if (type == PLANE)
     {
-      std::string m_str_ = "地面";
+      std::string m_str_ = "水面";
       m_page_buttons[i]->setText(m_str_.c_str());
     }
   }
@@ -1457,33 +1457,33 @@ void QRVizCloudAnnotation::SetCurrentLabel(const uint64 label, const uint64 page
     switch (m_label_)
     {
     case 0:
-      m_str_ = "当前标记：小型车";
+      m_str_ = "当前标记：三体船";
       break;
     case 1:
-      m_str_ = "当前标记：大型车";
+      m_str_ = "当前标记：雕塑";
       break;
     case 2:
-      m_str_ = "当前标记：行人";
+      m_str_ = "当前标记：帆船";
       break;
     case 3:
-      m_str_ = "当前标记：骑行者";
+      m_str_ = "当前标记：未知";
       break;
     }
     m_current_page_label->setText(m_str_.c_str());
   }
   else if (ANNOTATION_TYPE == KERB)
   {
-    const std::string str = "当前标记：路沿";
+    const std::string str = "当前标记：岸边";
     m_current_page_label->setText(str.c_str());
   }
   else if (ANNOTATION_TYPE == PLANE)
   {
-    const std::string str = "当前标记：地面";
+    const std::string str = "当前标记：水面";
     m_current_page_label->setText(str.c_str());
   }
   else if (ANNOTATION_TYPE == LANE)
   {
-    const std::string str = "当前标记：车道线";
+    const std::string str = "当前标记：航道";
     m_current_page_label->setText(str.c_str());
   }
 

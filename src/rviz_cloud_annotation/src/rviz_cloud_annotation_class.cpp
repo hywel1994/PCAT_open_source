@@ -963,16 +963,16 @@ std::string RVizCloudAnnotation::label2Name(int label)
   switch (m_label_)
   {
   case 0:
-    m_str_ = "Car";
+    m_str_ = "Trimaran";
     break;
   case 1:
-    m_str_ = "Cart";
+    m_str_ = "Obstacles";
     break;
   case 2:
-    m_str_ = "Pedestrian";
+    m_str_ = "Sailboat";
     break;
   case 3:
-    m_str_ = "Cyclist";
+    m_str_ = "Unknow";
     break;
   }
   return m_str_;
